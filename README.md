@@ -2,7 +2,7 @@
 
 A small screenshot tool for Windows 11, in the spirit of the Snipping Tool: press **Print Screen**, drag over what you want, and it's on your clipboard.
 
-![Shotto icon](Assets/Shotto.ico)
+<img src="Assets/Shotto.png" alt="Shotto logo" width="128">
 
 ## Features
 
