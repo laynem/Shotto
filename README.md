@@ -39,3 +39,7 @@ The app is `bin/Release/net10.0-windows/Shotto.exe` and needs the .NET 10 Deskto
 Settings are stored in `%APPDATA%\Shotto\settings.json`.
 
 `tools/make-icon.ps1` regenerates `Assets/Shotto.ico`.
+
+## License
+
+[MIT](LICENSE)
