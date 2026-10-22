@@ -44,10 +44,18 @@ namespace Shotto
                 if (File.Exists(FilePath)) s = JsonSerializer.Deserialize<Settings>(File.ReadAllText(FilePath));
             }
             catch (Exception) { }
-            s = s ?? new Settings();
+            if (s == null)
+            {
+                s = new Settings();
+                s.IsFirstRun = !File.Exists(FilePath);
+            }
             s.FillDefaults();
             return s;
         }
+
+        // True when no settings file existed yet, i.e. Shotto has never run for this user.
+        [System.Text.Json.Serialization.JsonIgnore]
+        public bool IsFirstRun { get; private set; }
 
         public void Save()
         {

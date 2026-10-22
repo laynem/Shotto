@@ -12,7 +12,7 @@ A small screenshot tool for Windows 11, in the spirit of the Snipping Tool: pres
 - **Editor** – pen, highlighter, rectangle, ellipse and arrow (hold Shift for squares and circles), a color picker with palette, hue/saturation picker and hex entry, sizes from 1 to 48 px, undo/redo, zoom. Copy or save the marked-up image.
 - **Rebindable shortcuts** – any key with Ctrl/Alt/Shift/Win, or Print Screen, Pause, Scroll Lock and F-keys on their own.
 - **Saving** – Save goes to your chosen folder (Downloads by default) as PNG or JPG; Save as lets you pick.
-- **Starts with Windows** – optionally, and silently into the notification area.
+- **Starts with Windows** – on by default, silently into the notification area (both can be turned off in settings).
 - **Owns Print Screen** – can turn off Windows' "Use the Print screen key to open screen capture" so Snipping Tool doesn't open even when Shotto is closed. Turning the option off restores the Windows setting.
 - Windows 11 look (Fluent theme, Mica, light/dark and accent color), per-monitor DPI aware.
 

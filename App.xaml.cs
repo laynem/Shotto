@@ -46,6 +46,15 @@ namespace Shotto
             Settings = Settings.Load();
             try { Settings.ApplyPrintScreenTakeover(); }
             catch (Exception) { } // Not worth failing startup over; the hook still owns Print Screen while we run.
+
+            // Launch at sign-in is on by default. Rewriting the entry on every run keeps it pointing at
+            // this exe if Shotto has been moved, and in sync with the silent-start option.
+            try
+            {
+                if (Settings.IsFirstRun || Settings.LaunchAtStartup) Settings.ApplyStartup(true);
+                if (Settings.IsFirstRun) Settings.Save();
+            }
+            catch (Exception) { }
             showEvent = new EventWaitHandle(false, EventResetMode.AutoReset, ShowEventName);
             ThreadPool.RegisterWaitForSingleObject(showEvent, delegate { Dispatcher.BeginInvoke(new Action(ShowSettings)); }, null, -1, false);
 
