@@ -27,6 +27,16 @@ namespace Shotto
             base.OnStartup(e);
             bool silent = e.Args.Any(a => a.Equals("--silent", StringComparison.OrdinalIgnoreCase));
 
+            // A tray app has nowhere to show a crash, so record it. UI-thread errors (a failed capture,
+            // a busy clipboard) are logged and survived rather than taking down the hotkeys.
+            AppDomain.CurrentDomain.UnhandledException += (s, args) => LogCrash(args.ExceptionObject as Exception);
+            DispatcherUnhandledException += (s, args) =>
+            {
+                LogCrash(args.Exception);
+                args.Handled = true;
+                if (tray != null) tray.ShowError("Something went wrong", args.Exception.Message);
+            };
+
             // Second launch: ask the running instance to show its window, then quit.
             bool first;
             instanceMutex = new Mutex(true, InstanceName, out first);
@@ -69,6 +79,18 @@ namespace Shotto
             if (hook != null) hook.Dispose();
             if (tray != null) tray.Dispose();
             base.OnExit(e);
+        }
+
+        static void LogCrash(Exception ex)
+        {
+            try
+            {
+                string dir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Shotto");
+                System.IO.Directory.CreateDirectory(dir);
+                System.IO.File.AppendAllText(System.IO.Path.Combine(dir, "crash.log"),
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "  " + ex + Environment.NewLine + Environment.NewLine);
+            }
+            catch (Exception) { } // Never let logging itself crash the app.
         }
 
         public void Quit()
